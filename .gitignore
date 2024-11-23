@@ -1,0 +1,78 @@
+# Операционная система
+.DS_Store
+Thumbs.db
+
+# Лог-файлы
+*.log
+*.out
+*.pid
+
+# Файлы конфигурации и окружения
+.env
+*.ini
+*.yaml
+*.yml
+
+# Кэш и временные файлы
+*.pyc
+*.pyo
+__pycache__/
+*.swp
+*.swo
+*.tmp
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.iml
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Python
+venv/
+.env/
+Pipfile
+Pipfile.lock
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+
+# C/C++
+*.obj
+*.o
+*.exe
+*.out
+*.dSYM/
+*.d
+
+# JetBrains (IntelliJ, PyCharm, etc.)
+*.ipr
+*.iws
+*.idea/
+out/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# macOS
+*.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
