@@ -40,8 +40,9 @@ __pycache__/
 # Node.js
 node_modules/
 
+
 # Python
-venv/
+
 Pipfile
 Pipfile.lock
 
