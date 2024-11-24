@@ -1,21 +1,21 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Модель даних
-class DataInput(BaseModel):
-    text: str
-from fastapi.middleware.cors import CORSMiddleware
-
-# Додайте цей код після ініціалізації FastAPI
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Дозволити всі домени (для тестування). У продакшені використовуйте список дозволених доменів.
+    allow_origins=["*"],  # Allow all origins for testing; restrict in production.
     allow_credentials=True,
-    allow_methods=["*"],  # Дозволити всі HTTP-методи
-    allow_headers=["*"],  # Дозволити всі заголовки
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
 )
+
+# Input data model
+class DataInput(BaseModel):
+    text: str
 
 @app.get("/")
 def read_root():
@@ -23,12 +23,18 @@ def read_root():
 
 @app.post("/process/")
 def process_data(data: DataInput):
-    processed_text = data
-    #####################################
-    word_count = len(data.text.split())
-    char_count = len(data.text)
+    # Check for empty input
+    if not data.text.strip():
+        raise HTTPException(status_code=400, detail="Text input cannot be empty.")
+
+    # Process text
+    normalized_text = " ".join(data.text.split())  # Remove extra spaces
+
     print(f"Original Text: {data.text}")
-    print(f"Word Count: {word_count}")
-    print(f"Character Count: {char_count}")
-    ################################
-    return  processed_text
+    print(f"Normalized Text: {normalized_text}")
+
+    # Return processed data
+    return {
+        "original_text": data.text,
+        "normalized_text": normalized_text,
+    }
