@@ -3,27 +3,6 @@ import axios from "axios";
 import "./App.css";
 import { FaPaperPlane, FaRedo } from "react-icons/fa";
 
-// Компонент для поступового виведення тексту
-const TypingText = ({ text }) => {
-  const [displayedText, setDisplayedText] = useState("");
-
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50); // Інтервал між символами (50 мс)
-
-    return () => clearInterval(interval); // Очищення інтервалу
-  }, [text]);
-
-  return <p>{displayedText}</p>;
-};
-
 function App() {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -37,37 +16,72 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(""); // Сброс ошибок
+    setError("");
 
     if (!inputText.trim()) {
-      setError("Input text cannot be empty."); // Проверка на пустое поле
+      setError("Input text cannot be empty.");
       return;
     }
 
     const userMessage = { sender: "user", text: inputText };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
-    setInputText(""); // Очистка поля ввода
-    setIsTyping(true); // Бот начинает "писать"
+    setInputText("");
+    setIsTyping(true);
 
     try {
       const response = await axios.post("http://localhost:8000/process/", {
         text: userMessage.text,
       });
 
-      const botMessage = {
+      const botMessageText = {
         sender: "bot",
         text: response.data.normalized_text || "No response from the server.",
       };
 
-      setTimeout(() => {
-        setMessages((prevMessages) => [...prevMessages, botMessage]);
-        setIsTyping(false); // Завершаем "набор текста"
-      }, 1500); // Задержка ответа
+      const botMessageImage = {
+        sender: "bot",
+        image: "/path/to/graf2.png", // URL картинки
+      };
+
+      simulateTyping(botMessageText, botMessageImage);
     } catch (error) {
       console.error("Error processing data:", error);
       setError("Failed to process the text. Please try again.");
-      setIsTyping(false); // Останавливаем "набор текста"
+      setIsTyping(false);
     }
+  };
+
+  const simulateTyping = (botMessageText, botMessageImage) => {
+    let index = 0;
+
+    // Друк тексту
+    const interval = setInterval(() => {
+      if (index < botMessageText.text.length) {
+        const currentMessage = {
+          sender: "bot",
+          text: botMessageText.text.slice(0, index + 1),
+        };
+
+        setMessages((prevMessages) => {
+          const updatedMessages = [...prevMessages];
+          if (updatedMessages[updatedMessages.length - 1]?.sender === "bot") {
+            updatedMessages[updatedMessages.length - 1] = currentMessage;
+          } else {
+            updatedMessages.push(currentMessage);
+          }
+          return updatedMessages;
+        });
+        index++;
+      } else {
+        clearInterval(interval); // Завершення друку тексту
+
+        // Додаємо картинку як окреме повідомлення
+        setTimeout(() => {
+          setMessages((prevMessages) => [...prevMessages, botMessageImage]);
+          setIsTyping(false);
+        }, 500); // Затримка перед відображенням картинки
+      }
+    }, 50); // Швидкість друку тексту (50 мс на символ)
   };
 
   const handleClearChat = () => {
@@ -96,18 +110,21 @@ function App() {
                 message.sender === "user" ? "user-message" : "bot-message"
               }`}
             >
-              {message.sender === "bot" ? (
-                <TypingText text={message.text} />
-              ) : (
-                <p>{message.text}</p>
+              {message.text && <p>{message.text}</p>}
+              {message.image && (
+                <img
+                  src={message.image}
+                  alt="Visualization"
+                  style={{
+                    width: "100%", // Зображення заповнює ширину контейнера
+                    height: "auto", // Пропорції зберігаються
+                    borderRadius: "12px",
+                    marginTop: "10px",
+                  }}
+                />
               )}
             </div>
           ))}
-          {isTyping && (
-            <div className="message bot-message">
-              <p>Bot is typing...</p>
-            </div>
-          )}
           <div ref={messagesEndRef} />
         </div>
         {error && <div className="error">{error}</div>}
