@@ -6,8 +6,8 @@
 }
 
 body {
-  font-family: "Garamond", Serif;
-  background-color: #48AFCD; /* Насичений блакитний фон сайту */
+  font-family: "Arial", sans-serif;
+  background-color: #497285; /* Насичений блакитний фон сайту */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -31,7 +31,7 @@ body {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Тінь для об'єму */
   overflow: hidden;
   margin: 40px auto 0;
-  border: 3px solid #ffffff; /* Яскравий блакитний для рамки */
+  border: 2px solid #2E79BA; /* Яскравий блакитний для рамки */
 }
 
 .messages {
@@ -40,10 +40,10 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  background: #ffffff; /* Світлий фон між повідомленнями */
-  /*border-top: 2px solid #2E79BA; /* Блакитна рамка зверху */
+  gap: 30px; /* Збільшена відстань між повідомленнями */
+  background-color: #ffffff; /* Фон збігається з контейнером */
 }
+
 
 .message {
   padding: 16px 24px; /* Більше внутрішніх відступів */
@@ -52,19 +52,19 @@ body {
   font-size: 18px; /* Трохи більший шрифт */
   word-wrap: break-word;
   color: #333; /* Темний текст */
-  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легка тінь */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легка тінь */
   animation: fadeIn 0.5s ease; /* Анімація появи */
 }
 
 .user-message {
   align-self: flex-end;
-  background: #1A7bb6; /* Блакитний градієнт */
+  background: linear-gradient(135deg, #2E79BA, #68A7D6); /* Блакитний градієнт */
   color: #ffffff; /* Білий текст */
 }
 
 .bot-message {
   align-self: flex-start;
-  background:  #CA8746; /* Темно-блакитний градієнт */
+  background: linear-gradient(135deg, #6C89B2, #497285); /* Темно-блакитний градієнт */
   color: #ffffff; /* Білий текст */
 }
 
@@ -72,7 +72,8 @@ body {
   display: flex;
   align-items: center;
   padding: 15px;
-  /*background-color: white; /* Білий фон */
+  background-color: #ffffff; /* Фон збігається з контейнером */
+  /* Видалено border-top */
 }
 
 .input-field {
@@ -80,24 +81,24 @@ body {
   width: 90%;
   padding: 15px;
   font-size: 16px;
-  border: 1px solid #354765; /* Блакитний колір рамки */
+  border: 2px solid #2E79BA; /* Блакитний колір рамки */
   border-radius: 24px; /* Сильне заокруглення */
   margin-right: 10px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  background-color: #D3D9E4; /* Легкий блакитний фон */
+  background-color: #f0faff; /* Легкий блакитний фон */
   color: #333; /* Темний текст */
 }
 
 .input-field:focus {
-  border-color: #354765; /* Світліший блакитний акцент */
-  outline: 2px;
+  border-color: #68A7D6; /* Світліший блакитний акцент */
+  outline: none;
   box-shadow: 0 0 12px rgba(104, 167, 214, 0.5); /* Легке сяйво */
 }
 
 .send-button {
   padding: 15px;
   background: linear-gradient(135deg, #2E79BA, #68A7D6); /* Блакитний градієнт */
-  color: #FCE9CE;
+  color: white;
   border: none;
   border-radius: 50%; /* Кругла кнопка */
   cursor: pointer;
@@ -119,18 +120,22 @@ body {
 .send-button:active {
   transform: scale(0.9); /* Зменшення при натисканні */
 }
-
 .reset-chat-button {
   position: absolute;
-  top: 45px;
-  left: 45px;
-  background: #CA8746; /* Темно-блакитний градієнт */
+  top: 45px; /* Відстань зверху */
+  left: 165px; /* Відстань зліва */
+  background: linear-gradient(135deg, #497285, #6C89B2); /* Темно-блакитний градієнт */
   color: white;
   border: none;
-  border-radius: 50%;
-  padding: 20px;
+  border-radius: 50%; /* Робить кнопку круглою */
+  width: 60px; /* Ширина кнопки */
+  height: 60px; /* Висота кнопки */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; /* Вимикаємо додатковий відступ */
   cursor: pointer;
-  font-size: 20px;
+  font-size: 25px;
   z-index: 2;
   transition: transform 0.2s ease, background-color 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тінь */
@@ -138,8 +143,10 @@ body {
 
 .reset-chat-button:hover {
   background: linear-gradient(135deg, #68A7D6, #99CCE3); /* Світліший блакитний градієнт */
-  transform: rotate(15deg); /* Поворот */
+  transform: rotate(50deg); /* Поворот */
 }
+
+
 
 .error {
   color: #2E79BA;
