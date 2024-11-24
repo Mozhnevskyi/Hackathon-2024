@@ -3,6 +3,27 @@ import axios from "axios";
 import "./App.css";
 import { FaPaperPlane, FaRedo } from "react-icons/fa";
 
+// Компонент для поступового виведення тексту
+const TypingText = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setDisplayedText((prev) => prev + text[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50); // Інтервал між символами (50 мс)
+
+    return () => clearInterval(interval); // Очищення інтервалу
+  }, [text]);
+
+  return <p>{displayedText}</p>;
+};
+
 function App() {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -75,7 +96,11 @@ function App() {
                 message.sender === "user" ? "user-message" : "bot-message"
               }`}
             >
-              {message.text && <p>{message.text}</p>}
+              {message.sender === "bot" ? (
+                <TypingText text={message.text} />
+              ) : (
+                <p>{message.text}</p>
+              )}
             </div>
           ))}
           {isTyping && (
