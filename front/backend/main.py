@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from gpt import process_request
 
 app = FastAPI()
 
@@ -33,8 +34,12 @@ def process_data(data: DataInput):
     print(f"Original Text: {data.text}")
     print(f"Normalized Text: {normalized_text}")
 
+    # Call the process_request function from gpt.py
+
+    ans = process_request(normalized_text)
+
     # Return processed data
     return {
         "original_text": data.text,
-        "normalized_text": normalized_text,
+        "normalized_text": ans,
     }
