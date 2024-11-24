@@ -7,13 +7,11 @@
 
 body {
   font-family: "Arial", sans-serif;
-  background-color: #800000; /* Глибокий бордовий фон */
+  background-color: #497285; /* Насичений блакитний фон сайту */
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
-  padding: 0;
 }
 
 .App {
@@ -28,134 +26,146 @@ body {
   flex-direction: column;
   height: 90%;
   width: 800px; /* Фіксована ширина для чату */
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff; /* Білий фон для контейнера */
+  border-radius: 24px; /* Сильне заокруглення */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Тінь для об'єму */
   overflow: hidden;
-  margin: 40px auto 0; /* Відступ зверху 20px, автоцентр по горизонталі */
+  margin: 40px auto 0;
+  border: 2px solid #2E79BA; /* Яскравий блакитний для рамки */
 }
-
 
 .messages {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 15px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: #f5eaea; /* Світлий бордовий фон для повідомлень */
+  gap: 15px;
+  background-color: #f5f9ee; /* Світлий фон між повідомленнями */
+  border-top: 2px solid #2E79BA; /* Блакитна рамка зверху */
 }
 
 .message {
-  padding: 12px 18px;
-  border-radius: 16px; /* Закруглені краї для повідомлень */
-  max-width: 75%; /* Максимальна ширина повідомлення */
-  font-size: 16px;
+  padding: 16px 24px; /* Більше внутрішніх відступів */
+  border-radius: 20px; /* Закруглені краї */
+  max-width: 75%;
+  font-size: 18px; /* Трохи більший шрифт */
   word-wrap: break-word;
+  color: #333; /* Темний текст */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легка тінь */
+  animation: fadeIn 0.5s ease; /* Анімація появи */
 }
 
 .user-message {
   align-self: flex-end;
-  background-color: #a52a2a; /* Бордовий фон для повідомлень користувача */
-  color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #2E79BA, #68A7D6); /* Блакитний градієнт */
+  color: #ffffff; /* Білий текст */
 }
 
 .bot-message {
   align-self: flex-start;
-  background-color: #e0d4d4; /* Світлий бордовий відтінок для бота */
-  color: #333;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #6C89B2, #497285); /* Темно-блакитний градієнт */
+  color: #ffffff; /* Білий текст */
 }
 
 .input-form {
   display: flex;
   align-items: center;
   padding: 15px;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
+  background-color: #ffffff; /* Білий фон */
+  border-top: 2px solid #2E79BA; /* Яскрава блакитна рамка зверху */
 }
 
 .input-field {
-  flex-grow: 2; /* Поле займає максимум доступного простору */
-  width: 90%; /* Ширина інпуту */
+  flex-grow: 2;
+  width: 90%;
   padding: 15px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 24px; /* Закруглені краї, як у ChatGPT */
+  border: 2px solid #2E79BA; /* Блакитний колір рамки */
+  border-radius: 24px; /* Сильне заокруглення */
   margin-right: 10px;
-  transition: border-color 0.3s ease, width 0.3s ease-in-out; /* Плавні переходи */
-  background-color: #f9f9f9; /* Світлий фон для інпуту */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f0faff; /* Легкий блакитний фон */
+  color: #333; /* Темний текст */
 }
 
 .input-field:focus {
-  border-color: #800000; /* Бордовий акцент при фокусі */
+  border-color: #68A7D6; /* Світліший блакитний акцент */
   outline: none;
-  background-color: #ffffff; /* Білий фон під час фокусу */
-  box-shadow: 0 0 8px rgba(128, 0, 0, 0.3); /* Легке сяйво */
+  box-shadow: 0 0 12px rgba(104, 167, 214, 0.5); /* Легке сяйво */
 }
 
 .send-button {
-  padding: 10px;
-  background-color: #800000; /* Бордовий колір кнопки */
+  padding: 15px;
+  background: linear-gradient(135deg, #2E79BA, #68A7D6); /* Блакитний градієнт */
   color: white;
   border: none;
   border-radius: 50%; /* Кругла кнопка */
   cursor: pointer;
-  font-size: 18px;
-  width: 48px; /* Розмір кнопки */
-  height: 48px;
+  font-size: 20px;
+  width: 56px;
+  height: 56px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тінь */
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .send-button:hover {
-  background-color: #a52a2a; /* Бордовий відтінок при наведенні */
-  transform: scale(1.1); /* Легке збільшення */
+  background: linear-gradient(135deg, #68A7D6, #99CCE3); /* Світліший блакитний градієнт */
+  transform: scale(1.2); /* Збільшення */
 }
 
-.send-button:disabled {
-  background-color: #ccc; /* Сірий колір для неактивної кнопки */
-  cursor: not-allowed;
+.send-button:active {
+  transform: scale(0.9); /* Зменшення при натисканні */
 }
 
 .reset-chat-button {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #800000;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, #497285, #6C89B2); /* Темно-блакитний градієнт */
   color: white;
   border: none;
   border-radius: 50%;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   font-size: 20px;
   z-index: 2;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тінь */
 }
 
 .reset-chat-button:hover {
-  background-color: #a52a2a; /* Бордовий відтінок при наведенні */
-  transform: scale(1.1); /* Легке збільшення */
+  background: linear-gradient(135deg, #68A7D6, #99CCE3); /* Світліший блакитний градієнт */
+  transform: rotate(15deg); /* Поворот */
 }
 
 .error {
-  color: red;
+  color: #2E79BA;
   text-align: center;
+  font-size: 18px;
   margin: 10px 0;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease;
 }
 
+/* Адаптивний дизайн */
 @media (max-width: 768px) {
+  .chat-container {
+    width: 95%;
+    height: 95%;
+    margin: 20px auto;
+  }
+
   .input-field {
-    width: 85%; /* Інпут трохи зменшується на менших екранах */
     font-size: 14px;
   }
 
   .send-button {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
   }
 }
