@@ -1,4 +1,4 @@
-/* Загальні стилі */
+/* Общие стили */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f4f7fc;
   height: 100vh;
   display: flex;
@@ -16,7 +16,7 @@ body {
 
 .App {
   width: 100%;
-  height: 100vh; /* Забезпечує використання всього екрану */
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -26,8 +26,6 @@ body {
   flex-direction: column;
   height: 100%;
   background-color: #fff;
-  border-radius: 0; /* Забираємо радіуси для повноекранного вигляду */
-  box-shadow: none; /* Без тіні */
 }
 
 .messages {
@@ -48,7 +46,7 @@ body {
 
 .user-message {
   align-self: flex-end;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -68,7 +66,6 @@ body {
 
 .input-field {
   flex-grow: 1;
-  width: 100%; /* Поле вводу займає 70% ширини екрану */
   padding: 15px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -78,82 +75,46 @@ body {
 
 .send-button {
   padding: 10px 15px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 18px;
   transition: background-color 0.3s ease;
-  font-size: 18px; /* Розмір іконки */
 }
 
-.send-button i {
-  font-size: 20px; /* Розмір іконки */
-  vertical-align: middle; /* Вирівнюємо іконку по центру */
-}
-
-.send-button:hover {
-  background-color: #45a049;
-}
-
-.send-button:focus {
-  outline: none;
-}
-
-/* Стилі для вимкненої кнопки */
 .send-button.disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-/* Стилі для вітального тексту */
-.welcome-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
-  color: #888;
-  text-align: center;
-  z-index: 1;
-}
-
-.message-image {
-  margin-top: 10px;
-  max-width: 40%; /* Адаптація до ширини повідомлення */
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-/* Стилі для кнопки повтору */
 .reset-chat-button {
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #4CAF50; /* Зелений фон для кнопки повтору */
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 50%;
   padding: 10px;
   cursor: pointer;
   font-size: 20px;
-  transition: background-color 0.3s ease;
-  z-index: 2; /* Перекриває інші елементи */
+  z-index: 2;
 }
 
 .reset-chat-button:hover {
   background-color: #45a049;
 }
 
-.reset-chat-button:focus {
-  outline: none;
+.error {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
 }
 
-
-/* Додатковий стиль для забезпечення адаптивності */
 @media (max-width: 600px) {
   .input-field {
-    width: 60%; /* Зменшення ширини поля на мобільних пристроях */
     font-size: 14px;
   }
 
