@@ -40,7 +40,7 @@ function App() {
 
       const botMessageImage = {
         sender: "bot",
-        image: "/path/to/graf2.png", // URL картинки
+        image: "/graf.png", // Зображення з папки public
       };
 
       simulateTyping(botMessageText, botMessageImage);
