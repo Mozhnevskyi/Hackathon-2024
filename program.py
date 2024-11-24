@@ -10,7 +10,7 @@ def run_frontend():
     frontend_path = os.path.join("front", "react-frontend")
     subprocess.Popen(["npm", "start"], cwd=frontend_path, shell=sys.platform.startswith('win'))
 
-if __name__ == "__main__":
+if name == "main":
     print("Starting servers...")
     run_backend()
     run_frontend()
@@ -19,4 +19,3 @@ if __name__ == "__main__":
             pass
     except KeyboardInterrupt:
         print("\nServers stopped.")
-
