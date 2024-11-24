@@ -1,4 +1,4 @@
-/* Общие стили */
+/* Загальні стилі */
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +21,7 @@ body {
   flex-direction: column;
 }
 
+/* Контейнер чату */
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -45,6 +46,7 @@ body {
 }
 
 
+/* Стилі для повідомлень */
 .message {
   padding: 16px 24px; /* Більше внутрішніх відступів */
   border-radius: 20px; /* Закруглені краї */
@@ -73,7 +75,6 @@ body {
   align-items: center;
   padding: 15px;
   background-color: #ffffff; /* Фон збігається з контейнером */
-  /* Видалено border-top */
 }
 
 .input-field {
@@ -120,6 +121,8 @@ body {
 .send-button:active {
   transform: scale(0.9); /* Зменшення при натисканні */
 }
+
+/* Кнопка Reset */
 .reset-chat-button {
   position: absolute;
   top: 45px; /* Відстань зверху */
@@ -146,7 +149,59 @@ body {
   transform: rotate(50deg); /* Поворот */
 }
 
+/* Стилі для правил гри */
+.rules {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  z-index: 1; /* Зменшено на випадок, якщо кнопка "reset" перекриває правила */
+  animation: fadeIn 0.5s ease;
+}
 
+.rules h3 {
+  color: #2E79BA;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.rules ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.rules li {
+  margin-bottom: 10px;
+}
+
+.rules button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #2E79BA, #68A7D6); /* Блакитний градієнт */
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rules button:hover {
+  background-color: #68A7D6;
+}
+
+.rules button:focus {
+  outline: none;
+}
 
 .error {
   color: #2E79BA;
@@ -158,9 +213,9 @@ body {
 }
 
 /* Адаптивний дизайн */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .chat-container {
-    width: 95%;
+    width: 90%;
     height: 95%;
     margin: 20px auto;
   }
@@ -173,5 +228,78 @@ body {
     width: 48px;
     height: 48px;
     font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+    width: 100%;
+    height: 95%;
+    margin: 20px auto;
+  }
+
+  .input-field {
+    font-size: 14px;
+  }
+
+  .send-button {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .reset-chat-button {
+    top: 30px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .rules {
+    width: 90%;
+    padding: 15px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-container {
+    width: 100%;
+    height: 100%;
+    margin: 10px auto;
+  }
+
+  .input-field {
+    font-size: 12px;
+  }
+
+  .send-button {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .reset-chat-button {
+    top: 20px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .rules {
+    width: 90%;
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
