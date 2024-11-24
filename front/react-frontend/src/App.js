@@ -1,68 +1,141 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./App.css";
+import React, { useState, useEffect, useRef } from "react";
+import "./App.css"; // Імпортуємо файл з CSS стилями
+import grafImage from "./graf.png"; // Імпортуємо зображення
+import { FaPaperPlane, FaRedo } from 'react-icons/fa'; // Імпортуємо іконки для кнопок
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [processedText, setProcessedText] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Анимация загрузки
+  const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false); // Анімація "бот друкує"
+  const [firstMessageSent, setFirstMessageSent] = useState(false); // Відслідковуємо, чи було надіслано перше повідомлення
+
+  // Реф для останнього повідомлення
+  const messagesEndRef = useRef(null);
 
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setError(""); // Сброс ошибок
-    setProcessedText(""); // Очистка результата перед новым запросом
 
-    if (!inputText.trim()) {
-      setError("Input text cannot be empty."); // Проверка на пустое поле
-      return;
+    if (!inputText.trim()) return; // Не надсилати порожній текст
+
+    // Додати введений текст до списку повідомлень
+    const userMessage = { sender: "user", text: inputText };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+
+    // Позначаємо, що перше повідомлення відправлено
+    if (!firstMessageSent) {
+      setFirstMessageSent(true);
     }
 
-    setIsLoading(true); // Включаем анимацию загрузки
+    // Почати відповідь від бота
+    setIsTyping(true); // Імітація друкування
+    const botMessage = { sender: "bot", text: "" }; // Текст бота додається поступово
+    setMessages((prevMessages) => [...prevMessages, botMessage]);
 
-    try {
-      const response = await axios.post("http://localhost:8000/process/", {
-        text: inputText,
-      });
-      setProcessedText(response.data.normalized_text); // Используем нормализованный текст
-    } catch (error) {
-      console.error("Error processing data:", error);
-      setError("Failed to process the text. Please try again.");
-    } finally {
-      setIsLoading(false); // Выключаем анимацию загрузки
-    }
+    // Поступове введення тексту
+    const fullText = `${inputText}`;
+    let index = 0;
+
+    const typingInterval = setInterval(() => {
+      if (index < fullText.length) {
+        setMessages((prevMessages) => {
+          // Клонування попереднього стану
+          const updatedMessages = [...prevMessages];
+          // Отримуємо останнє повідомлення бота
+          const lastMessage = { ...updatedMessages[updatedMessages.length - 1] };
+
+          if (lastMessage.sender === "bot" && !lastMessage.image) {
+            lastMessage.text = fullText.slice(0, index + 1); // Поступове додавання тексту
+            updatedMessages[updatedMessages.length - 1] = lastMessage; // Оновлюємо останнє повідомлення
+          }
+
+          return updatedMessages;
+        });
+        index++;
+      } else {
+        clearInterval(typingInterval);
+        setIsTyping(false); // Завершити друк тексту
+
+        // Додати картинку через затримку
+        const botImageMessage = {
+          sender: "bot",
+          image: grafImage,
+        };
+        setTimeout(() => {
+          setMessages((prevMessages) => [...prevMessages, botImageMessage]);
+        }, 500); // Затримка після тексту
+      }
+    }, 50); // Швидкість друкування
+
+    setInputText(""); // Очищення поля вводу
   };
+
+  const handleClearChat = () => {
+    // Очищаємо всі стани
+    setMessages([]);
+    setInputText("");
+    setFirstMessageSent(false);
+  };
+
+  // Використовуємо ефект для автоматичного скролінгу до кінця
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]); // Слідкуємо за змінами в messages
 
   return (
     <div className="App">
       <div className="chat-container">
         <div className="messages">
-          {/* Анимация загрузки */}
-          {isLoading && (
-            <div className="loading-animation">
-              <span className="dot"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
+          {/* Кнопка повтору */}
+          <button
+            className="reset-chat-button"
+            onClick={handleClearChat}
+          >
+            <FaRedo /> {/* Іконка для кнопки повтору */}
+          </button>
+
+          {/* Показуємо текст, поки користувач не надіслав повідомлення */}
+          {!firstMessageSent && (
+            <div className="welcome-text">
+              <p>Биняш - секс</p>
             </div>
           )}
 
-          {/* Отображение ошибок */}
-          {error && (
-            <div className="error">
-              <p>{error}</p>
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`message ${
+                message.sender === "user" ? "user-message" : "bot-message"
+              }`}
+            >
+              {message.text && <p>{message.text}</p>}
+              {message.image && (
+                <img
+                  src={message.image}
+                  alt="Bot response"
+                  className="message-image"
+                  onLoad={() => {
+                    if (messagesEndRef.current) {
+                      messagesEndRef.current.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                />
+              )}
+            </div>
+          ))}
+          {isTyping && (
+            <div className="message bot-message">
+              <p>Bot is typing...</p>
             </div>
           )}
-
-          {/* Отображение результата */}
-          {processedText && (
-            <div className="message bot-message fade-in">
-              <p>{processedText}</p>
-            </div>
-          )}
+          <div ref={messagesEndRef} /> {/* Місце для автоматичного скролінгу */}
         </div>
         <form onSubmit={handleSubmit} className="input-form">
           <input
@@ -74,10 +147,10 @@ function App() {
           />
           <button
             type="submit"
-            className={`send-button ${isLoading ? "disabled" : ""}`}
-            disabled={isLoading}
+            className={`send-button ${isTyping ? "disabled" : ""}`} // Додаємо клас disabled
+            disabled={isTyping} // Вимикаємо кнопку, коли бот пише
           >
-            Submit
+            <FaPaperPlane />
           </button>
         </form>
       </div>
@@ -86,5 +159,3 @@ function App() {
 }
 
 export default App;
-
-
